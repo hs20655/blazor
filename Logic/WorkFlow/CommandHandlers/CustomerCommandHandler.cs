@@ -81,7 +81,7 @@ namespace Logic.WorkFlow.CommandHandlers
             requestedCustomerExist.Country = request.Country;
             requestedCustomerExist.Phone = request.Phone;
 
-            result.OperationResult = await _unitOfWork.Customers.Upsert(requestedCustomerExist);
+            result.OperationResult =  _unitOfWork.Customers.Update(requestedCustomerExist);
 
             if (!result.OperationResult)
             {

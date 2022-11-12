@@ -11,10 +11,10 @@ namespace Logic.Core.Repositories.IRepositories
 {
     public interface IGenericRepository<T> where T : Entity
     {
-        Task<T> GetById(Guid id);
+        Task<T?> GetById(Guid id);
         Task<bool> Add(T entity);
         Task<bool> Delete(Guid id);
-        Task<bool> Upsert(T entity);
+        bool Update(T entity);
         Task<ResponseList<T>> PagedResult(int PageNumber, int PageSize);
     }
 }

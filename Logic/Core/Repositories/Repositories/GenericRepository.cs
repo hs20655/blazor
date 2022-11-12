@@ -29,24 +29,32 @@ namespace Logic.Core.Repositories.Repositories
             _logger = logger;
         }
 
-        public async Task<T> GetById(Guid id)
+        public async Task<T?> GetById(Guid id)
         {
             return await dbSet.FindAsync(id);
         }
         public virtual async Task<bool> Add(T entity)
         {
             //BASE ADD (if need more actions need to override this methods in concrete repository)
-            await dbSet.AddAsync(entity);
-            return true;
+            try
+            {
+                await dbSet.AddAsync(entity);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} Add function error", typeof(T));
+                return false;
+            }
+            
+            
         }
-
         public virtual async Task<bool> Delete(Guid id)
         {
             //BASE DELETE (if need more actions need to override this methods in concrete repository)
             try
             {
-                var exist = await dbSet.Where(x => x.Id == id)
-                                        .FirstOrDefaultAsync();
+                var exist = await dbSet.Where(x => x.Id == id).FirstOrDefaultAsync();
 
                 if (exist == null) return false;
 
@@ -58,8 +66,7 @@ namespace Logic.Core.Repositories.Repositories
                 return false;
             }
         }
-
-        public virtual async Task<bool> Upsert(T entity)
+        public virtual bool Update(T entity)
         {
             //BASE UPDATE (if need more actions need to override this methods in concrete repository)
             try
@@ -73,7 +80,6 @@ namespace Logic.Core.Repositories.Repositories
                 return false;
             }
         }
-
         public async Task<ResponseList<T>> PagedResult(int PageNumber, int PageSize)
         {
             // this method can page/filter/sort  - to implement
