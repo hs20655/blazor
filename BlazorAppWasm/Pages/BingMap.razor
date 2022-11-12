@@ -1,0 +1,109 @@
+﻿@page "/bingmap"
+@using BlazorAppWasm.Bing
+@using BlazorAppWasm.Services
+@using Microsoft.Extensions.Primitives
+@using static BlazorAppWasm.Bing.Resource
+@inject CustomerService customerService
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="">
+            <label for="CompanyName">FROM (ex.Athens)</label>
+            <input type="text" @bind-value="destFrom" class="form-control" id="idCompanyName" placeholder="">
+        </div>
+        <div class="">
+            <label for="ContactName">TO (ex.Patra)</label>
+            <input type="text" @bind-value="destTo" class="form-control" id="idContactName" placeholder="">
+        </div>
+
+        <button onclick="@(async () => await Search())"  class="btn btn-primary mt-3">Search</button>
+    </div>
+</div>
+
+@if (showGrid)
+{
+    
+    <div class="row">
+        <div class="col-md-12">
+            Travel Mode: @map.ResourceSets[0].Resources[0].TravelMode
+            Travel Distance @map.ResourceSets[0].Resources[0].TravelDistance  @map.ResourceSets[0].Resources[0].DistanceUnit
+            Travel Duration @map.ResourceSets[0].Resources[0].TravelDuration  @map.ResourceSets[0].Resources[0].DurationUnit
+
+            Start Location  @map.ResourceSets[0].Resources[0].RouteLegs[0].StartLocation.Address.FormattedAddress
+            End Location  @map.ResourceSets[0].Resources[0].RouteLegs[0].EndLocation.Address.FormattedAddress
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">CompassDirection</th>
+                        <th scope="col">Instruction</th>
+                        <th scope="col">TravelDistance KM</th>
+                        <th scope="col">TravelDuration SECONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in @map.ResourceSets[0].Resources[0].RouteLegs[0].ItineraryItems)
+                    {
+
+                        <tr>
+                            <td>@item.CompassDirection</td>
+                            <td>@item.Instruction.Text</td>
+                            <td>@item.TravelDistance</td>
+                            <td>@item.TravelDuration</td>
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+
+}
+else
+if (reloading)
+{
+    <p><em>Loading...</em></p>
+}
+
+
+@code {
+    public Response map = new Response();
+    public string? destFrom { get; set; }
+    public string? destTo { get; set; }
+    public bool showGrid = false;
+    public bool reloading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //await GetRouteMap();
+    }
+
+    private async Task GetRouteMap(string pointA = "Athens", string pointB = "Patra")
+    {
+        map = await customerService.Autosuggest(pointA, pointB);
+
+    }
+
+    private async Task Search()
+    {
+        showGrid = false;
+        reloading = true;        
+        
+        await GetRouteMap(destFrom, destTo);
+        
+        showGrid = true;
+        reloading = false;
+    }
+}

@@ -1,0 +1,35 @@
+﻿@using BlazorAppWasm.Services
+@using Data.Entities
+@inject CustomerService customerService
+
+
+
+<div>
+    <div class="form-group">
+        Are you sure you want to delete this customer?
+    </div>
+
+    <button onclick="@(async () => await DeleteCustomer())" class="btn btn-primary mt-3">Submit</button>
+
+</div>
+
+@*<div class="row">
+    <div class="col-md-12">Are you sure you want to delete this customer?</div>
+</div>
+<div class="row">
+    <div class="col-md-12"><button @onclick="DeleteCustomer" class="btn btn-primary mt-3">Submit</button></div>
+</div>*@
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    private async Task DeleteCustomer()
+    {
+       
+     var result = await customerService.DeleteCustomer(Id);
+     await BlazoredModal.CloseAsync(ModalResult.Ok());
+
+        // CLOSE MODAL on success
+    }
+}

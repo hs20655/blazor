@@ -1,0 +1,172 @@
+﻿@page "/customers"
+@using BlazorAppWasm.Components
+@using BlazorAppWasm.Human
+@using BlazorAppWasm.Services
+@using Data.DTO.Responses
+@using Data.Entities
+@using Microsoft.Extensions.Primitives
+@inject CustomerService customerService
+@inject IModalService modal
+
+
+<div class="row">
+    <div class="col-md-2"> <button onclick="@(async () => await Add())" class="btn btn-primary mt-3">Add Customer</button></div>
+    <div class="col-md-10" style="color:blue">
+       Method in a new class that takes either Manager or an Employee as a parameter and prints its name:
+            @PrintHumanName.Print(new Manager(){ Name = "Manager Panos"})
+            &nbsp;
+            @PrintHumanName.Print(new Employee(){ Name = "Employee Aliki"})
+    </div>
+</div>
+
+@if (showGrid)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Actions</th>
+                        @*<th scope="col">Id</th>*@
+                        <th scope="col">Company Name</th>
+                        <th scope="col">Contact Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Region</th>
+                        <th scope="col">PostalCode</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in customers.Payload)
+                    {
+                        <tr id="@item.Id">
+                            <td> <a style="font-weight:bold; cursor: pointer;" onclick="@(async () => await Edit(item))"><u>Edit</u></a>&nbsp;&nbsp;<a style="font-weight:bold; cursor: pointer;" onclick="@(async () => await Delete(item.Id, item.ContactName ?? string.Empty))"><u>Delete</u></a></td>
+                            @* <td>@item.Id</td>*@
+                            <td>@item.CompanyName</td>
+                            <td>@item.ContactName</td>
+                            <td>@item.Address</td>
+                            <td>@item.City</td>
+                            <td>@item.Region</td>
+                            <td>@item.PostalCode</td>
+                            <td>@item.Country</td>
+                            <td>@item.Phone</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-4">
+            <input type="button" class="btn-lg btn" id="prev" @onclick="PrevPage" value="Previous" />
+            <span>page @currPage of  @totalPages </span>
+            <input type="button" class="btn-lg btn" id="next" @onclick="NextPage" value="Next" />
+            <span>&nbsp; Total Records  @customers.TotalRecords</span>
+        </div>
+    </div>
+}
+else{
+    <p><em>Loading...</em></p>
+}
+
+
+@code
+{
+    public ResponseList<Customer> customers = new ResponseList<Customer>();
+    private int currPage = 1;
+    private int totalPages;
+    private int pageSizeDefault = 10;
+    public bool showGrid = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RenderGrid(currPage,pageSizeDefault);
+        showGrid = true;
+
+    }
+
+    private async Task RenderGrid(int page, int pageSize)
+    {
+        showGrid = false;
+        customers = await customerService.GetCustomers(page, pageSize);
+
+        totalPages = customers.TotalRecords / pageSizeDefault;
+
+        if (customers.TotalRecords % pageSizeDefault > 0) 
+            ++totalPages;
+        showGrid = true;
+    }
+
+    private async Task PrevPage()
+    {
+        if (currPage > 1) 
+            await RenderGrid(--currPage, pageSizeDefault);
+    }
+
+    private async Task NextPage()
+    {
+        if (currPage < totalPages) 
+            await RenderGrid(++currPage, pageSizeDefault);
+    }
+
+    private async Task Add()
+    {
+        var addModal = modal.Show<CustomerAddComp>("Add new customer");
+        var result = await addModal.Result;
+
+        if (result.Confirmed)
+        {
+            await RenderGrid(currPage, pageSizeDefault);
+        }
+
+    }
+
+    private async Task Edit(Customer customer)
+    {
+        string emptyString = string.Empty;
+        var parameters = new ModalParameters
+        {
+            { nameof(CustomerEditComp.Id), customer.Id},
+            { nameof(CustomerEditComp.CompanyName), customer.CompanyName ?? emptyString},
+            { nameof(CustomerEditComp.ContactName), customer.ContactName ?? emptyString},
+            { nameof(CustomerEditComp.Address), customer.Address ?? emptyString},
+            { nameof(CustomerEditComp.City), customer.City ?? emptyString},
+            { nameof(CustomerEditComp.Region), customer.Region ?? emptyString},
+            { nameof(CustomerEditComp.PostalCode), customer.PostalCode ?? emptyString},
+            { nameof(CustomerEditComp.Country), customer.Country ?? emptyString},
+            { nameof(CustomerEditComp.Phone), customer.Phone ?? emptyString},
+
+        };
+        var updateModal = modal.Show<CustomerEditComp>("Edit " + customer.ContactName + " information", parameters);
+        var result = await updateModal.Result;
+
+        if (result.Confirmed)
+        {
+            //await RenderGrid(currPage, pageSizeDefault);          
+        }
+
+    }
+
+    private async Task Delete(Guid guid, string name)
+    {
+        var parameters = new ModalParameters
+        {
+            { nameof(CustomerEditComp.Id), guid}
+
+        };
+        var deleteModal = modal.Show<CustomerDeleteComp>("Delete Customer " + name, parameters);
+        var result = await deleteModal.Result;
+
+        if (result.Confirmed)
+        {
+            await RenderGrid(currPage, pageSizeDefault);
+        }
+    }
+
+}
