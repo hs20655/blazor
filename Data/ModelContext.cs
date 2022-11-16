@@ -1,4 +1,5 @@
-﻿using Data.Configurations;
+﻿using Data.Authentication;
+using Data.Configurations;
 using Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

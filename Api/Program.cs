@@ -1,5 +1,5 @@
 using Data;
-using Data.Entities;
+using Data.Authentication;
 using Logic.Core.UnitOfWork.Configuration;
 using Logic.Core.UnitOfWork.IConfiguration;
 using MediatR;
