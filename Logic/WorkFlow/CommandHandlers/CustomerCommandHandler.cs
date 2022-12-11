@@ -47,8 +47,8 @@ namespace Logic.WorkFlow.CommandHandlers
                 Phone = request.Phone
             };
 
-            bool created = await _unitOfWork.Customers.Add(customer);
-            await _unitOfWork.CompleteAsync();
+            bool created = await _unitOfWork.Customers.Add(customer, cancellationToken);
+            await _unitOfWork.CompleteAsync(cancellationToken);
             if (created) result.OperationResult = customer.Id.ToString();
 
            
@@ -89,7 +89,7 @@ namespace Logic.WorkFlow.CommandHandlers
                 return result;
             }
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.CompleteAsync(cancellationToken);
 
             return result;
         }
@@ -110,7 +110,7 @@ namespace Logic.WorkFlow.CommandHandlers
                 return result;
             }
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.CompleteAsync(cancellationToken);
             return result;
         }
     }

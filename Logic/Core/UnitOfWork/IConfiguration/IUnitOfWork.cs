@@ -12,7 +12,7 @@ namespace Logic.Core.UnitOfWork.IConfiguration
     {
         CustomersRepository Customers { get; }
 
-        Task CompleteAsync();
+        Task CompleteAsync(CancellationToken cancellationToken);
         
     }
 }

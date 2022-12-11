@@ -27,9 +27,9 @@ namespace Logic.Core.UnitOfWork.Configuration
             Customers  = new CustomersRepository(context, _logger);
 
         }
-        public async Task CompleteAsync()
+        public async Task CompleteAsync(CancellationToken cancellationToken)
         {
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public void Dispose()

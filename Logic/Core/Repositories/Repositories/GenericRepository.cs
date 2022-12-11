@@ -33,12 +33,12 @@ namespace Logic.Core.Repositories.Repositories
         {
             return await dbSet.FindAsync(id);
         }
-        public virtual async Task<bool> Add(T entity)
+        public virtual async Task<bool> Add(T entity, CancellationToken cancellationToken)
         {
             //BASE ADD (if need more actions need to override this methods in concrete repository)
             try
             {
-                await dbSet.AddAsync(entity);
+                await dbSet.AddAsync(entity, cancellationToken);
                 return true;
             }
             catch (Exception ex)
