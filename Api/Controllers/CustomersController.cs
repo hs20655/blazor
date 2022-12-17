@@ -4,31 +4,30 @@ using Data.Entities;
 using Logic.WorkFlow.Commands.Customer;
 using Logic.WorkFlow.QuerieHandlers.Customers;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Api.Controllers
 {
+    [Authorize(Roles = "admin")] //[Authorize(Roles = "admin, manaer...")]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : MainController
     {
-        public CustomersController(IMediator Mediator) : base(Mediator)
-        {
-        }
-
         [HttpPost("AllCustomers")]
         public async Task<IActionResult> AllCustomers([FromBody] RequestList request)
         {
-            var response = await _Mediator.Send(new CustomersQueryHandler.Query(request.PageNumber, request.PageSize));
+            var response = await Mediator.Send(new CustomersQueryHandler.Query(request.PageNumber, request.PageSize));
             return Ok(response);
         }
 
         [HttpPost("AddCustomer")]
         public async Task<IActionResult> AddCustomer([FromBody] AddCustomerRequest request)
         {
-            var response = await _Mediator.Send(new AddCustomerCommand() 
+            var response = await Mediator.Send(new AddCustomerCommand() 
             {
                 CompanyName = request.CompanyName,
                 ContactName = request.ContactName,
@@ -45,7 +44,7 @@ namespace Api.Controllers
         [HttpPut("UpdateCustomer")]
         public async Task<IActionResult> UpdateCustomer([FromBody] UpdateCustomerRequest request)
         {
-            var response = await _Mediator.Send(new UpdateCustomerCommand()
+            var response = await Mediator.Send(new UpdateCustomerCommand()
             {
                 Id = Guid.Parse(request.CustomerId),
                 CompanyName = request.CompanyName,
@@ -63,7 +62,7 @@ namespace Api.Controllers
         [HttpPost("DeleteCustomer")]
         public async Task<IActionResult> DeleteCustomer([FromBody] DeleteCustomerRequest request)
         {
-            var response = await _Mediator.Send(new DeleteCustomerCommand()
+            var response = await Mediator.Send(new DeleteCustomerCommand()
             {
                 Id = Guid.Parse(request.CustomerId),
             });

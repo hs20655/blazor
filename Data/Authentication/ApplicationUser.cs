@@ -11,5 +11,6 @@ namespace Data.Authentication
     {
         public string? RefreshToken { get; set; }
         public DateTime RefreshTokenExpiryTime { get; set; }
+        //CAN ADD MORE FIELDS TO USER TABLE AspNEtUsers
     }
 }

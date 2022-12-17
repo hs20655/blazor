@@ -6,13 +6,10 @@ namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MainController : ControllerBase
+    public abstract class MainController : ControllerBase
     {
-        public IMediator _Mediator;
-
-        public MainController(IMediator Mediator)
-        {
-            _Mediator = Mediator;
-        }
+        private IMediator _mediator;
+        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+        
     }
 }
