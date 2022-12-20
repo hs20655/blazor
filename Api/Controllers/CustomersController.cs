@@ -12,7 +12,7 @@ using System.Data;
 
 namespace Api.Controllers
 {
-    [Authorize(Roles = "admin")] //[Authorize(Roles = "admin, manaer...")]
+    [Authorize(Roles = "admin")] //[Authorize(Roles = "admin, manager...")]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : MainController

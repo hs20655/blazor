@@ -84,7 +84,6 @@ namespace Api.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
             //
            
-
             if (!result.Succeeded)
             {
                 string errorMsg = string.Empty;
@@ -123,7 +122,7 @@ namespace Api.Controllers
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleModel model)
         {
 
-            //CREATE ROLES
+            //CREATE ROLE
             if (!await _roleManager.RoleExistsAsync(model.Role))
             {
                 await _roleManager.CreateAsync(new IdentityRole(model.Role));
@@ -151,11 +150,7 @@ namespace Api.Controllers
                 return BadRequest("Invalid access token or refresh token");
             }
 
-            #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            #pragma warning disable CS8602 // Dereference of a possibly null reference.
             string username = principal.Identity.Name;
-            #pragma warning restore CS8602 // Dereference of a possibly null reference.
-            #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             var user = await _userManager.FindByNameAsync(username);
 
