@@ -25,7 +25,7 @@ namespace Logic.WorkFlow.QuerieHandlers.Customers
             }
         }
 
-        public class Handler : IRequestHandler<Query, ResponseList<Customer>>
+        private class Handler : IRequestHandler<Query, ResponseList<Customer>>
         {
             protected IUnitOfWork _unitOfWork;
             public Handler(IUnitOfWork unitOfWork)

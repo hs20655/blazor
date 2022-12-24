@@ -17,9 +17,10 @@ namespace Api.Controllers
     [ApiController]
     public class CustomersController : MainController
     {
-        [HttpPost("AllCustomers")]
-        public async Task<IActionResult> AllCustomers([FromBody] RequestList request)
+        [HttpPost("Customers")]
+        public async Task<IActionResult> Customers([FromBody] RequestList request)
         {
+           // var a = new Handler();
             var response = await Mediator.Send(new CustomersQueryHandler.Query(request.PageNumber, request.PageSize));
             return Ok(response);
         }

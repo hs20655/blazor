@@ -8,7 +8,7 @@ namespace Data.DTO.Responses
 {
     public class ResponseList<T> : IResponse
     {
-        public List<T> Payload { get; set; }
+        public List<T> Data { get; set; }
         public int TotalRecords { get; set; }
     }
 }

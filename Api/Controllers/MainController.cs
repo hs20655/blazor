@@ -8,8 +8,9 @@ namespace Api.Controllers
     [ApiController]
     public abstract class MainController : ControllerBase
     {
-        private IMediator _mediator;
-        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
-        
+        private IMediator? _mediator;
+        //protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+        protected IMediator Mediator => _mediator = HttpContext.RequestServices.GetService<IMediator>() ?? null;
+
     }
 }

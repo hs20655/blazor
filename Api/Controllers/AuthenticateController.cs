@@ -95,7 +95,6 @@ namespace Api.Controllers
             return Ok(new AuthResponse { Status = "Success", Message = "User created successfully!" });
         }
 
-
         [HttpPost("AssignRole")]
         public async Task<IActionResult> AssignRole([FromBody] AssignRoleModel model)
         {
