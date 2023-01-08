@@ -84,7 +84,9 @@ namespace Logic.Core.Repositories.Repositories
         {
             // this method can page/filter/sort  - to implement
             return new ResponseList<T>() 
-            { 
+            {
+                // dennd to pas predecate in order to seard
+                //await dbSet.Where<F>(new Predicate).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync()
                 Data = await dbSet.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync(), 
                 TotalRecords = await dbSet.CountAsync()
             };
