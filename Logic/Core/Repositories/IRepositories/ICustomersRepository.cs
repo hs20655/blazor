@@ -8,6 +8,6 @@ namespace Logic.Core.Repositories.IRepositories
 {
     public interface ICustomersRepository
     {
-        public int GetTopcutomers(int a);
+        //public int GetTopcutomers(int a);
     }
 }

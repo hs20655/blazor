@@ -1,4 +1,5 @@
-﻿using Azure;
+﻿using Abp.Linq.Expressions;
+using Azure;
 using Data;
 using Data.DTO.Responses;
 using Data.Entities;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -80,16 +82,34 @@ namespace Logic.Core.Repositories.Repositories
                 return false;
             }
         }
-        public async Task<ResponseList<T>> PagedResult(int PageNumber, int PageSize)
-        {
-            // this method can page/filter/sort  - to implement
-            return new ResponseList<T>() 
-            {
-                // dennd to pas predecate in order to seard
-                //await dbSet.Where<F>(new Predicate).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync()
-                Data = await dbSet.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync(), 
-                TotalRecords = await dbSet.CountAsync()
-            };
-        }
+        //public async Task<ResponseList<T>> PagedResult(int PageNumber, int PageSize, FiltersBase filters)
+        //{
+        //    //FOR TEST BEGIN  NEED TO IMPLEMENT HERE ODATA!!!!!!!!!!!!!!!!!!!!
+        //    var predicate = BuildExpression(filters);
+        //    var result1 = await dbSet.Where((System.Linq.Expressions.Expression<Func<T, bool>>)predicate).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
+
+        //    return new ResponseList<T>()
+        //    {                
+        //        Data = await dbSet.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync(), 
+        //        TotalRecords = await dbSet.CountAsync()
+        //    };
+        //}
+
+        //public object BuildExpression(FiltersBase filters)
+        //{
+        //    //foreach (var item in filters.FieldsAndValues)
+        //    //{
+        //    //    //item.
+        //    //}
+        //    if(typeof(T) is Customer)
+        //    {
+        //        var predicate = PredicateBuilder.New<Customer>();
+        //        predicate.And(p => p.CompanyName.Contains(""));
+        //        return predicate;
+        //    }
+        //    return new object();
+        //}
+
+        
     }
 }

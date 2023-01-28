@@ -15,16 +15,16 @@ namespace Logic.Core.Repositories.Repositories
     {
        public CustomersRepository(ModelContext context, ILogger logger) : base(context, logger) {}
 
-        public int GetTopcutomers(int a)
-        {
-            //just example  Write her your methods with diffrent fvalidations
-            //dbSet.Add(new Customer());
-            //return await dbSet
-            //   .Include(i => i.Invoices)
-            //   //.Include(p => p.Parkings)
-            //   //.Include(v => v.ClientVehicles) //NEED TO CHECK 
-            //   .ToListAsync();
-            return 1;
-        }
+        //public int GetTopcutomers(int a)
+        //{
+        //    //just example  Write her your methods with diffrent fvalidations
+        //    //dbSet.Add(new Customer());
+        //    //return await dbSet
+        //    //   .Include(i => i.Invoices)
+        //    //   //.Include(p => p.Parkings)
+        //    //   //.Include(v => v.ClientVehicles) //NEED TO CHECK 
+        //    //   .ToListAsync();
+        //    return 1;
+        //}
     }
 }

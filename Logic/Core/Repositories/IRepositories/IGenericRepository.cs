@@ -15,6 +15,6 @@ namespace Logic.Core.Repositories.IRepositories
         Task<bool> Add(T entity, CancellationToken cancellationToken);
         Task<bool> Delete(Guid id);
         bool Update(T entity);
-        Task<ResponseList<T>> PagedResult(int PageNumber, int PageSize);
+        //Task<ResponseList<T>> PagedResult(int PageNumber, int PageSize, FiltersBase filtes);
     }
 }

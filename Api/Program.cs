@@ -1,12 +1,17 @@
 using Data;
 using Data.Authentication;
+using Data.Entities;
 using Logic.Core.UnitOfWork.Configuration;
 using Logic.Core.UnitOfWork.IConfiguration;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 using System.Reflection;
 using System.Text;
 
@@ -63,8 +68,22 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
-builder.Services.AddControllers();
+static IEdmModel GetEdmModel()
+{
+    ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+    builder.EntitySet<Customer>("CustomersOdata");
+    return builder.GetEdmModel();
+}
+builder.Services.AddControllers().AddOData(options => options
+//.AddRouteComponents("odata", GetEdmModel())
+.EnableQueryFeatures()
+.Expand()
+    .Select()
+    .Count()
+    .OrderBy()
+    .SetMaxTop(250)
+.AddRouteComponents("odata", GetEdmModel())
+    );
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
