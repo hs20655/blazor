@@ -1,5 +1,6 @@
 using Data;
 using Data.Authentication;
+using Data.Configurations;
 using Data.Entities;
 using Logic.Core.UnitOfWork.Configuration;
 using Logic.Core.UnitOfWork.IConfiguration;
@@ -68,22 +69,25 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+//ODATA
 static IEdmModel GetEdmModel()
 {
-    ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Customer>("CustomersOdata");
-    return builder.GetEdmModel();
+    ODataConventionModelBuilder builderOdata = new ODataConventionModelBuilder();
+    //CustomersOdata this parameter must mutch with controller name  ex. CustomersOdataController
+    //https://localhost:7247/odata/CustomersOdata  root
+    builderOdata.EntitySet<Customer>("CustomersOdata");
+    
+    return builderOdata.GetEdmModel();
 }
 builder.Services.AddControllers().AddOData(options => options
-//.AddRouteComponents("odata", GetEdmModel())
-.EnableQueryFeatures()
-.Expand()
-    .Select()
-    .Count()
-    .OrderBy()
-    .SetMaxTop(250)
+.EnableQueryFeatures() //enable all options
+//.Expand()
+//.Select()
+//.Count()
+//.OrderBy()
+//.SetMaxTop(500)
 .AddRouteComponents("odata", GetEdmModel())
-    );
+ );
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
