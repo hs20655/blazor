@@ -31,6 +31,7 @@ namespace Data
         {
 
             base.OnModelCreating(modelBuilder);
+            //ADD configurations for entities
             modelBuilder.ApplyConfiguration(new CustomersConfiguration());
 
         }

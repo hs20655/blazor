@@ -29,6 +29,7 @@ namespace Logic.Core.Repositories.Repositories
             this.context = context;
             this.dbSet = context.Set<T>();
             _logger = logger;
+
         }
 
         public async Task<T?> GetById(Guid id)
@@ -82,34 +83,6 @@ namespace Logic.Core.Repositories.Repositories
                 return false;
             }
         }
-        //public async Task<ResponseList<T>> PagedResult(int PageNumber, int PageSize, FiltersBase filters)
-        //{
-        //    //FOR TEST BEGIN  NEED TO IMPLEMENT HERE ODATA!!!!!!!!!!!!!!!!!!!!
-        //    var predicate = BuildExpression(filters);
-        //    var result1 = await dbSet.Where((System.Linq.Expressions.Expression<Func<T, bool>>)predicate).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
-
-        //    return new ResponseList<T>()
-        //    {                
-        //        Data = await dbSet.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync(), 
-        //        TotalRecords = await dbSet.CountAsync()
-        //    };
-        //}
-
-        //public object BuildExpression(FiltersBase filters)
-        //{
-        //    //foreach (var item in filters.FieldsAndValues)
-        //    //{
-        //    //    //item.
-        //    //}
-        //    if(typeof(T) is Customer)
-        //    {
-        //        var predicate = PredicateBuilder.New<Customer>();
-        //        predicate.And(p => p.CompanyName.Contains(""));
-        //        return predicate;
-        //    }
-        //    return new object();
-        //}
-
-        
+      
     }
 }

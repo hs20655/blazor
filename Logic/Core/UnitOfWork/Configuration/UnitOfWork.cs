@@ -24,12 +24,17 @@ namespace Logic.Core.UnitOfWork.Configuration
             _context = context;
             _logger = loggerFactory.CreateLogger("logs");
 
-            Customers  = new CustomersRepository(context, _logger);
+            Customers  = new CustomersRepository(_context, _logger);
 
         }
         public async Task CompleteAsync(CancellationToken cancellationToken)
         {
             await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public void DisposeDbConnection()
+        {
+            Dispose();
         }
 
         public void Dispose()

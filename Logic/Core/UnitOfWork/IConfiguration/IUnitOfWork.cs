@@ -17,6 +17,8 @@ namespace Logic.Core.UnitOfWork.IConfiguration
 
 
         Task CompleteAsync(CancellationToken cancellationToken);
-        
+
+        void DisposeDbConnection();
+
     }
 }
