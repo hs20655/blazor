@@ -3,6 +3,7 @@ using Azure;
 using Data;
 using Data.DTO.Responses;
 using Data.Entities;
+using Data.Shared;
 using Logic.Core.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -83,6 +85,44 @@ namespace Logic.Core.Repositories.Repositories
                 return false;
             }
         }
-      
+
+        public async Task<PagingResult<T>> Paging(Paging request)
+        {
+            var result = await dbSet.Paging(request.SearchQuery, request.PageNumber, request.PageSize)
+                .AsNoTracking().ToListAsync();
+
+            if (request.PageNumber == 0)
+            {
+                var total = await dbSet.SearchQuery(request.SearchQuery).CountAsync();
+                return new PagingResult<T>
+                {
+                    Timestamp = DateTime.Now,
+                    Result = new List<T>(result),
+                    Total = total
+                };
+            }
+
+            return new PagingResult<T>
+            {
+                Timestamp = default(DateTime?),
+                Result = new List<T>(result),
+                Total = default(int?)
+            };
+        }
+
+        public async Task<int> TotalRecords()
+        {
+            return await dbSet.CountAsync();
+        }
+
+        public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
+        {
+            return await dbSet.Where(predicate).ToListAsync();
+        }
+
+        public async Task<T> GetFirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return await dbSet.Where(predicate).FirstOrDefaultAsync();
+        }
     }
 }

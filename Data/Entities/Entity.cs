@@ -13,5 +13,9 @@ namespace Data.Entities
     {
         [Key]
         public Guid Id { get; set; }
+        public long CreatedByUserId { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public long? UpdatedByUserId { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }

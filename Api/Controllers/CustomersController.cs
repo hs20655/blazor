@@ -2,7 +2,9 @@
 using Data;
 using Data.DTO.Requests;
 using Data.Entities;
+using Data.Shared;
 using Logic.WorkFlow.Commands.Customer;
+using Logic.WorkFlow.QueryHandlers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +21,13 @@ namespace Api.Controllers
     [ApiController]
     public class CustomersController : MainController
     {
-       
+        [HttpPost("GetCustomers")]
+        public async Task<IActionResult> GetClients(Paging request)
+        {
+            var response = await Mediator.Send(new CustomerQueryHandler.Query(request));
+            return Ok(response);
+        }
+
         [HttpPost("AddCustomer")]
         public async Task<IActionResult> AddCustomer([FromBody] AddCustomerRequest request)
         {

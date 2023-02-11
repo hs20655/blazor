@@ -24,7 +24,7 @@ namespace Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-            @"Server=(localdb)\MSSQLLOcalDB;Database=BLAZOR;Trusted_Connection=True;");
+            @"Server=(localdb)\MSSQLLOcalDB;Database=BLAZOR_USERS;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

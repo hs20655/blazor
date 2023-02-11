@@ -29,7 +29,7 @@ namespace Logic.WorkFlow.CommandHandlers
         }
         public async Task<BusinessResult<string>> Handle(AddCustomerCommand request, CancellationToken cancellationToken)
         {
-            //_unitOfWork.DisposeDbConnection();
+            //_unitOfWork.DisposeDbConnection(); for test
             bool isCommandValid = request.IsValid(out List<BrokenRule> brokenRules);
             if (!isCommandValid)
                 return new BusinessResult<string>(string.Empty, brokenRules);
