@@ -4,7 +4,7 @@ using Data.DTO.Requests;
 using Data.Entities;
 using Data.Shared;
 using Logic.WorkFlow.Commands.Customer;
-using Logic.WorkFlow.QueryHandlers;
+using Logic.WorkFlow.QueryHandlers.Customers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

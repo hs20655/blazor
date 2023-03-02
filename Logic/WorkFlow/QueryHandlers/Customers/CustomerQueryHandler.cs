@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic.WorkFlow.QueryHandlers
+namespace Logic.WorkFlow.QueryHandlers.Customers
 {
     public class CustomerQueryHandler
     {
@@ -18,7 +18,7 @@ namespace Logic.WorkFlow.QueryHandlers
             public Paging Paging { get; set; }
             public Query(Paging paging)
             {
-                this.Paging = paging;
+                Paging = paging;
             }
         }
 
@@ -42,7 +42,7 @@ namespace Logic.WorkFlow.QueryHandlers
                 return result;
             }
 
-           
+
         }
     }
 }
