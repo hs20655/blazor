@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.DTO.Requests
+namespace Data.DTO.Requests.Customer
 {
-    public class UpdateCustomerRequest : IRequest
+    public class AddCustomerRequest : IRequest
     {
-        public string CustomerId { get; set; }
         public string? CompanyName { get; set; }
         public string? ContactName { get; set; }
         public string? Address { get; set; }

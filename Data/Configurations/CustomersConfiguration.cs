@@ -18,7 +18,7 @@ namespace Data.Configurations
               builder.Property(x => x.Id).HasDefaultValueSql("NEWID()");
             //builder.Property(e => e.Id).ValueGeneratedOnAdd();
             //builder.HasIndex(c => c.Id);
-            //builder.Property(c => c.Name).HasMaxLength(50).IsRequired(true);
+            //builder.Property(c => c.Address).HasMaxLength(50).IsRequired(true);
         }
     }
 }

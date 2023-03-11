@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic.Core.Repositories.IRepositories
+namespace Logic.WorkFlow.QueryHandlers
 {
-    public interface ICustomersRepository
+    public class QueryHandler
     {
-        public int GetTopcutomers(int a);
     }
 }

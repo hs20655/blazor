@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logic.Core.Repositories.IRepositories
 {
-    public interface ICustomersRepository
+    public interface ICountriesRepository
     {
-        public int GetTopcutomers(int a);
     }
 }

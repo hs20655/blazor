@@ -14,6 +14,9 @@ namespace Data
     public class ModelContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<IpAddress> IpAddresses { get; set; }
+        
 
         public ModelContext()
         {
@@ -33,6 +36,8 @@ namespace Data
             base.OnModelCreating(modelBuilder);
             //ADD configurations for entities
             modelBuilder.ApplyConfiguration(new CustomersConfiguration());
+            modelBuilder.ApplyConfiguration(new CountriesConfiguration());
+            modelBuilder.ApplyConfiguration(new IpAddressConfiguration());
 
         }
 

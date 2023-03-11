@@ -1,6 +1,6 @@
 ﻿using Azure.Core;
 using Data;
-using Data.DTO.Requests;
+using Data.DTO.Requests.Customer;
 using Data.Entities;
 using Data.Shared;
 using Logic.WorkFlow.Commands.Customer;

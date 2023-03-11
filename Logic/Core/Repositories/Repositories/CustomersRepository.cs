@@ -18,7 +18,7 @@ namespace Logic.Core.Repositories.Repositories
         public int GetTopcutomers(int a)
         {
             //just example  Write her your methods with diffrent fvalidations
-            dbSet.Add(new Customer());
+           // dbSet.Add(new Customer());
             //return await dbSet
             //   .Include(i => i.Invoices)
             //   //.Include(p => p.Parkings)

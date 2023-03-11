@@ -1,3 +1,4 @@
+using Api.BackgroundServices;
 using Data;
 using Data.Authentication;
 using Data.Configurations;
@@ -68,6 +69,17 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"] ?? string.Empty))
     };
 });
+
+//ADD MemoryChash
+builder.Services.AddMemoryCache();
+
+//HTTP
+builder.Services.AddHttpClient();
+
+//https://ip2c.org/  service
+builder.Services.AddHostedService<IpInfoService>();
+
+
 
 //ODATA
 static IEdmModel GetEdmModel()

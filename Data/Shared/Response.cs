@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Data.Shared
 {
-    public class Response<TPayload>
+    public class Response<T> 
     {
-        public TPayload Payload { get; set; }
-        public List<BrokenRule> BrokenRules { get; set; } = new List<BrokenRule>();
-
+        public T? Result { get; set; }
     }
 }

@@ -25,12 +25,6 @@ namespace Api.Controllers
             var filter = options.Filter;
             var result = _modelContext.Customers.AsQueryable();
             
-
-            // var queryResults = (IQueryable<Customer>)queryOptions.ApplyTo(query);
-            //return Ok(new PageResult<Customer>(queryResults, Request.ODataProperties().NextLink, Request.ODataProperties().TotalCount));
-            //return Ok(new PageResult<Customer>(queryResults);
-
-            // return Ok(result);
             return Ok(result);
         }
     }

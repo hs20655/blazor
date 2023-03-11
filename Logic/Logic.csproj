@@ -13,6 +13,12 @@
   <ItemGroup>
     <PackageReference Include="Abp" Version="8.0.0" />
     <PackageReference Include="MediatR" Version="11.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="WorkFlow\BackgroundServiceHandlers\" />
   </ItemGroup>
 
 </Project>

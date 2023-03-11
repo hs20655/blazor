@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.DTO.Requests
+namespace Data.DTO.Requests.Customer
 {
     public class DeleteCustomerRequest : IRequest
     {

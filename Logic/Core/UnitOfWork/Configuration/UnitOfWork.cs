@@ -18,6 +18,8 @@ namespace Logic.Core.UnitOfWork.Configuration
         private readonly ILogger _logger;
 
         public CustomersRepository Customers { get; private set; }
+        public CountriesRepository Countries { get; private set; }
+        public IpAddressesRepository IpAddresses { get; private set; }
 
         public UnitOfWork(ModelContext context, ILoggerFactory loggerFactory)
         {
@@ -25,6 +27,8 @@ namespace Logic.Core.UnitOfWork.Configuration
             _logger = loggerFactory.CreateLogger("logs");
 
             Customers  = new CustomersRepository(_context, _logger);
+            Countries = new CountriesRepository(_context, _logger);
+            IpAddresses = new IpAddressesRepository(_context, _logger);
 
         }
         public async Task CompleteAsync(CancellationToken cancellationToken)
