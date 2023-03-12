@@ -78,7 +78,7 @@ namespace Api.BackgroundServices
                                     {
                                         _memoryCache.Remove(storedIpInformation.Ip);
                                     }
-                                    //ADD to database and to MemoryChache
+                                    //ADD to database and 
                                     //VALIDATE IF county already exists in database
                                     var countryExist = countriesDbSet.Where(i => i.Name.Equals(lastIpInformation.CountryName))
                                         .Include(i => i.IpAddresses).FirstOrDefault();
