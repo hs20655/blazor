@@ -13,10 +13,11 @@ namespace Api.BackgroundServices
 {
     public sealed class IpInfoService : BackgroundService
     {
-        private const int generalDelay = 60000; //1 minute    //180000; // 3 minute, need to set one hour
+        private const int DELAY = 180000; // 3 minute, need to set one hour //need to add to appsettings json
+        private const int BATCH_TOTAL_RECORDS = 2;//100; need to add to appsettings json
         private IMemoryCache _memoryCache;
         private IHttpClientFactory _clientFactory;
-        private const int BATCH_TOTAL_RECORDS = 2;//100;
+        
 
         public IpInfoService(IMemoryCache memoryCache, IHttpClientFactory clientFactory)
         {
@@ -28,7 +29,7 @@ namespace Api.BackgroundServices
          
             while (!cancellationToken.IsCancellationRequested)
             {
-                await Task.Delay(generalDelay, cancellationToken);
+                await Task.Delay(DELAY, cancellationToken);
                 await this.SyncDatabase();
             }
         }
@@ -51,7 +52,7 @@ namespace Api.BackgroundServices
                     {
                         try
                         {
-                            httpResponse = await client.GetAsync($"https://ip2c.org/{storedIpInformation.Ip}");
+                            httpResponse = await client.GetAsync($"https://ip2c.org/{storedIpInformation.Ip}"); // need to add to appsettings json
                             responseFromNetwork = await httpResponse.Content.ReadAsStringAsync();
                             if (httpResponse.StatusCode != System.Net.HttpStatusCode.OK)
                                 continue;// write to log, 
