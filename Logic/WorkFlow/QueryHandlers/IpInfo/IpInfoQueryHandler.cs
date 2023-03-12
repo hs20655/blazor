@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Logic.WorkFlow.QueryHandlers.IpInfo
 {
-    public class IpInfoQueryHandler : QueryHandler
+    public sealed class IpInfoQueryHandler : QueryHandler
     {
         //IpInfoQueryHandler tha borouse na einai se idia morfi me ton CommandHandler xoris nested class,
         // ean prokite px na exei polles morfes methodou Handle(), me diaforetikous tipous request
@@ -34,9 +34,11 @@ namespace Logic.WorkFlow.QueryHandlers.IpInfo
 
         public class Handler :  IRequestHandler<Query, Response<IpInfoResponse>>
         {
-            protected IUnitOfWork _unitOfWork;
-            protected IMemoryCache _memoryCache;
-            protected IHttpClientFactory _clientFactory;
+            private IUnitOfWork _unitOfWork;
+            private IMemoryCache _memoryCache;
+            private IHttpClientFactory _clientFactory;
+            
+
             public Handler(IUnitOfWork unitOfWork, IMemoryCache memoryCache, IHttpClientFactory clientFactory)
             {
                 _unitOfWork = unitOfWork;
@@ -50,48 +52,59 @@ namespace Logic.WorkFlow.QueryHandlers.IpInfo
 
                 // validate ip address for null....
 
-                //Check in MemoryChash
-                _memoryCache.TryGetValue(query.Request.IpAddress, out IpInfoResponse? ipInfoFromChach);
+                //Check in MemoryChashe
+                _memoryCache.TryGetValue(query.Request.IpAddress, out IpInfoResponse? ipInfoFromChache);
                 
-                if(ipInfoFromChach == null)
+                if(ipInfoFromChache == null)
                 {
                     //Check in DataBase
                     var ipInfoFromDb = await _unitOfWork.IpAddresses.GetCountryDataByIp(query.Request.IpAddress);
                     if(ipInfoFromDb == null)
                     {
-                        //make httpFactory call to ex https://ip2c.org/62.74.227.62
-                        var client = _clientFactory.CreateClient();
-                        var httpResponse = await client.GetAsync($"https://ip2c.org/{query.Request.IpAddress}");// NEED TO ADD https://ip2c.org/ TO appsettings.json
-                        string responseFromNetwork = await httpResponse.Content.ReadAsStringAsync();
+                        //make httpFactory call to ex https://ip2c.org/62.74.227.62  
+                        HttpResponseMessage httpResponse;
+                        string responseFromNetwork = string.Empty;
+                        using var client = _clientFactory.CreateClient();
                         
-                        if(!responseFromNetwork.IsNullOrEmpty())
+                        try
+                        {
+                            httpResponse = await client.GetAsync($"https://ip2c.org/{query.Request.IpAddress}");// NEED TO ADD https://ip2c.org/ TO appsettings.json
+
+                            if (httpResponse.StatusCode != System.Net.HttpStatusCode.OK) 
+                                return response;// write to log 
+
+                            responseFromNetwork = await httpResponse.Content.ReadAsStringAsync();
+                        }
+                        catch (Exception)
+                        {
+                            //write to log 
+                        }
+
+                        if (!responseFromNetwork.IsNullOrEmpty())
                         {
                             var responseToArray = responseFromNetwork.Split(';', StringSplitOptions.RemoveEmptyEntries);
-                            if(responseToArray.Length == 4)
+                            if(responseToArray.Length >= (int)IpInfoEnnum.TotalFields)
                             {
                                 response.Result = new IpInfoResponse();
-                                response.Result.CountryName = responseToArray[3];
-                                response.Result.TwoLetterCode = responseToArray[1];
-                                response.Result.ThreeLetterCode = responseToArray[2];
-                                // store in MemoryCash
-                                _memoryCache.Set(query.Request.IpAddress, response.Result);
+                                response.Result.CountryName = responseToArray[(int)IpInfoEnnum.CountryName];
+                                response.Result.TwoLetterCode = responseToArray[(int)IpInfoEnnum.TwoLetterCode];
+                                response.Result.ThreeLetterCode = responseToArray[(int)IpInfoEnnum.ThreeLetterCode];
                                 
+                                // store in MemoryCache
+                                _memoryCache.Set(query.Request.IpAddress, response.Result);
                                 //store in Database
                                 //check if country exist in Countries table
                                 var country = await _unitOfWork.Countries.GetFirstOrDefault(i => i.Name == response.Result.CountryName);
 
+
                                 if (country != null)
                                 {
-                                    // if exist, add only new 
-                                    await _unitOfWork.IpAddresses.Add(
-                                    new IpAddress()
+                                    country.IpAddresses.Add(new IpAddress()
                                     {
-                                        CountryId= country.Id,
                                         Ip = query.Request.IpAddress,
                                         CreatedDate = DateTime.UtcNow,
                                         CreatedByUserId = 1
-                                    }, 
-                                    cancellationToken);
+                                    });
                                 }
                                 else
                                 {
@@ -116,8 +129,6 @@ namespace Logic.WorkFlow.QueryHandlers.IpInfo
                                         },
                                         cancellationToken);
                                 }
-
-                                
                                 //save changes
                                 await _unitOfWork.CompleteAsync(cancellationToken);
                             }
@@ -129,13 +140,10 @@ namespace Logic.WorkFlow.QueryHandlers.IpInfo
                         response.Result = ipInfoFromDb;
                         // add to MemoryChash
                         _memoryCache.Set(query.Request.IpAddress, ipInfoFromDb);
-                    }
-                        
+                    } 
                 }
                 else 
-                    response.Result = ipInfoFromChach; //return from cash
-
-
+                    response.Result = ipInfoFromChache; //return from cash
 
                 return response;
             }

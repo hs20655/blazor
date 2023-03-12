@@ -15,6 +15,6 @@ namespace Data.Entities
         public string ThreeLetterCode { get; set; }
         //public DateTime CreatedAt { get; set; }
 
-        public ICollection<IpAddress> IpAddresses { get; set; }
+        public ICollection<IpAddress> IpAddresses { get; set; } = new List<IpAddress>();
     }
 }

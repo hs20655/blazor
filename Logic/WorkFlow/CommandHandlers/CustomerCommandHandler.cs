@@ -16,12 +16,12 @@ using System.Threading.Tasks;
 
 namespace Logic.WorkFlow.CommandHandlers
 {
-    public class CustomerCommandHandler : CommandHandler,
+    public sealed class CustomerCommandHandler : CommandHandler,
         IRequestHandler<AddCustomerCommand, BusinessResult<string>>,
         IRequestHandler<UpdateCustomerCommand, BusinessResult<bool>>,
         IRequestHandler<DeleteCustomerCommand, BusinessResult<bool>>
     {
-        protected IUnitOfWork _unitOfWork;
+        private IUnitOfWork _unitOfWork;
 
         public CustomerCommandHandler(IUnitOfWork unitOfWork)
         {

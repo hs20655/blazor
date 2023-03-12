@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Logic.WorkFlow.QueryHandlers.Customers
 {
-    public class CustomerQueryHandler : QueryHandler
+    public sealed class CustomerQueryHandler : QueryHandler
     {
         //CustomerQueryHandler tha borouse na einai se idia morfi me ton CustomerCommandHandler,
         // ean prokite px na exei polles morfes methodou Handle(), me diaforetikous tipous request
@@ -26,7 +26,7 @@ namespace Logic.WorkFlow.QueryHandlers.Customers
 
         public class Handler : IRequestHandler<Query, ResponseList<Customer>>
         {
-            protected IUnitOfWork _unitOfWork;
+            private IUnitOfWork _unitOfWork;
             public Handler(IUnitOfWork unitOfWork)
             {
                 _unitOfWork = unitOfWork;
