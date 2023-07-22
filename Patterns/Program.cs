@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Patterns.BehavioralPatterns;
+using Patterns.CreationalPatterns;
+using Patterns.StructuralPatterns;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +13,17 @@ namespace Patterns
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("TOPIC ----- Pattens in C# -----");
+
+            CreationalPattern.Run();
+
+            //BehavioralPattern.Run();
+
+            //StructuralPattern.Run();
+
+            Console.ReadKey();
         }
+
+       
     }
 }
