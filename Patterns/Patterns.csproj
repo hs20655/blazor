@@ -45,6 +45,9 @@
   <ItemGroup>
     <Compile Include="BehavioralPatterns\BehavioralPattern.cs" />
     <Compile Include="CreationalPatterns\CreationalPattern.cs" />
+    <Compile Include="CreationalPatterns\Prototype\IdInfo.cs" />
+    <Compile Include="CreationalPatterns\Prototype\Person.cs" />
+    <Compile Include="CreationalPatterns\Prototype\PrototypeExample.cs" />
     <Compile Include="CreationalPatterns\Singleton\SingletonExample.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,7 +70,6 @@
     <Folder Include="CreationalPatterns\AbstractFactory\" />
     <Folder Include="CreationalPatterns\Builder\" />
     <Folder Include="CreationalPatterns\FactoryMethod\" />
-    <Folder Include="CreationalPatterns\Prototype\" />
     <Folder Include="StructuralPatterns\Adapter\" />
     <Folder Include="StructuralPatterns\Bridge\" />
     <Folder Include="StructuralPatterns\Composite\" />
