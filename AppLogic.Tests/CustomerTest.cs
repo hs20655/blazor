@@ -8,6 +8,7 @@ using System.Net;
 
 namespace AppLogic.Tests
 {
+    //MS Tests UnitTest
     [TestClass]
     public class CustomerTest
     {
