@@ -13,7 +13,7 @@ namespace Patterns
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("TOPIC ----- Pattens in C# -----");
+            Console.WriteLine("Pattens in C#");
 
             CreationalPattern.Run();
 

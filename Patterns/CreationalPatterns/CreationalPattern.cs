@@ -12,31 +12,31 @@ namespace Patterns.CreationalPatterns
     {
         public static void Run()
         {
-            Console.WriteLine("\n\nCreationlal Patterns\n");
-
             Singleton();
-
+            Prototype();
         }
 
-        private static void  Singleton()
+        private static void Singleton()
         {
-            Console.WriteLine("***Singleton Example***");
-            Console.WriteLine("Create 2 variables of SingletonExample class and compare them");
-            
             SingletonExample singletonFirst = SingletonExample.GetInstance();
             SingletonExample singletonSecond = SingletonExample.GetInstance();
 
 
             if (singletonFirst == singletonSecond)
             {
-                Console.WriteLine("Singleton works, both variables contain the same instance.");
+                //Singleton Works
                 singletonFirst.BusinessLogic();
             }
                
             else
-                Console.WriteLine("Singleton failed, variables contain different instances.");
+            {
+                //ERROR
+            }
+        }
 
-            Console.WriteLine("Press any key to see next example");
+        private static void Prototype()
+        {
+            
         }
     }
 }

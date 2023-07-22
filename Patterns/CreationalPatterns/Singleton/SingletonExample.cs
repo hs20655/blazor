@@ -23,7 +23,6 @@ namespace Patterns.CreationalPatterns.Singleton
 
         public void BusinessLogic() 
         {
-            Console.WriteLine("\n Run sum bussiness logic using singleton variables ");
         }
     }
 }
