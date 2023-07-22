@@ -20,14 +20,15 @@ namespace Data
 
         public ModelContext()
         {
-            //Database.EnsureDeleted();
+           // Database.EnsureDeleted(); //add to appsetting.json
             //Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
             optionsBuilder.UseSqlServer(
-            @"Server=(localdb)\MSSQLLOcalDB;Database=BLAZOR_USERS;Trusted_Connection=True;");
+            @"Server=localhost\SQLEXPRESS;Database=BLAZOR_USERS;Trusted_Connection=True;TrustServerCertificate=True"); //add to appsetting.json
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

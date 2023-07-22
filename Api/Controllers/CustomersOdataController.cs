@@ -10,7 +10,7 @@ using System.Data;
 
 namespace Api.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     public class CustomersOdataController : ODataController
     {
         private ModelContext _modelContext;
