@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Patterns", "Patterns\Patter
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Learning", "Learning", "{752B3F97-6187-4365-8E24-24768B67544C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{250106D5-16C1-4084-8F6C-2A97AB2BE8F8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApiExample", "WebApiExample", "{250106D5-16C1-4084-8F6C-2A97AB2BE8F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
