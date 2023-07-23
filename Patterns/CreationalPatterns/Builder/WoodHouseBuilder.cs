@@ -37,6 +37,7 @@ namespace Patterns.CreationalPatterns.Builder
             _woodHouse.AddComponent(new PlasticWindowComponent() { ComponentName = name });
         }
 
+        //SOME EXTRA TO ADD TO BASE HOUSE  COMPONENTS
         public void AddExtraWoodSauna(string name)
         {
             _woodHouse.AddComponent(new WoodSaunaComponent() { ComponentName = name });
