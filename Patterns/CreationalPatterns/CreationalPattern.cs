@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Patterns.CreationalPatterns.Builder;
 using Patterns.CreationalPatterns.Prototype;
 using Patterns.CreationalPatterns.Singleton;
 
@@ -63,7 +64,40 @@ namespace Patterns.CreationalPatterns
         }
         private static void BuilderExecute()
         {
+            //create house buiild manager
+            var houseBuilderManager = new HouseBuilderManager();
+            //set type of house to build
+            houseBuilderManager.SetHouseBuilder(typeof(WoodHouseBuilder));
 
+            var minimalWoodHousehouse = houseBuilderManager.BuildMinimal(new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>("walls","ITALIAN walls"),
+                new KeyValuePair<string, string>("doors","ITALIAN doors"),
+                new KeyValuePair<string, string>("windows","ITALIAN windows"),
+                new KeyValuePair<string, string>("roof","ITALIAN roof")
+            }).GetHouse();
+            
+            var fullFeaturedWoodHousehouse = houseBuilderManager.BuildFullFeatured(new List<KeyValuePair<string, string>> () 
+            {
+                new KeyValuePair<string, string>("walls","GERMAN walls"),
+                new KeyValuePair<string, string>("doors","GERMAN doors"),
+                new KeyValuePair<string, string>("windows","GERMAN windows"),
+                new KeyValuePair<string, string>("roof","GERMAN roof"),
+                new KeyValuePair<string, string>("sauna","GERMAN sauna")
+            }).GetHouse();
+
+            var fullFeaturedWoodHousehouse2 = houseBuilderManager.BuildFullFeatured(new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>("walls","SPANISH walls"),
+                new KeyValuePair<string, string>("doors","SPANISH doors"),
+                new KeyValuePair<string, string>("windows","SPANISH windows"),
+                new KeyValuePair<string, string>("roof","SPANISH roof"),
+                new KeyValuePair<string, string>("sauna","SPANISH sauna")
+            }).GetHouse();
+
+            //SET here other tyoe of house buider px SpesialHouseBuilder..
+
+            var houses = new List<IHouse>() { minimalWoodHousehouse, fullFeaturedWoodHousehouse, fullFeaturedWoodHousehouse2 };
         }
         private static void AbstractFactoryExecute()
         {

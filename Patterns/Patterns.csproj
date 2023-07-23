@@ -44,6 +44,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BehavioralPatterns\BehavioralPattern.cs" />
+    <Compile Include="CreationalPatterns\Builder\HoseComponents\IHouseComponent.cs" />
+    <Compile Include="CreationalPatterns\Builder\HoseComponents\MetalicRoofComponent.cs" />
+    <Compile Include="CreationalPatterns\Builder\HoseComponents\PlasticWindowComponent.cs" />
+    <Compile Include="CreationalPatterns\Builder\HoseComponents\SafetyDoorComponent.cs" />
+    <Compile Include="CreationalPatterns\Builder\HoseComponents\StandartWallsComponent.cs" />
+    <Compile Include="CreationalPatterns\Builder\HoseComponents\WoodSaunaComponent.cs" />
+    <Compile Include="CreationalPatterns\Builder\HouseBuilderManager.cs" />
+    <Compile Include="CreationalPatterns\Builder\IHouse.cs" />
+    <Compile Include="CreationalPatterns\Builder\IHouseBuilder.cs" />
+    <Compile Include="CreationalPatterns\Builder\WoodHouseBuilder.cs" />
+    <Compile Include="CreationalPatterns\Builder\WoodHouse.cs" />
     <Compile Include="CreationalPatterns\CreationalPattern.cs" />
     <Compile Include="CreationalPatterns\Prototype\IdInfo.cs" />
     <Compile Include="CreationalPatterns\Prototype\Person.cs" />
@@ -68,7 +79,6 @@
     <Folder Include="BehavioralPatterns\TemplateMethod\" />
     <Folder Include="BehavioralPatterns\Visitor\" />
     <Folder Include="CreationalPatterns\AbstractFactory\" />
-    <Folder Include="CreationalPatterns\Builder\" />
     <Folder Include="CreationalPatterns\FactoryMethod\" />
     <Folder Include="StructuralPatterns\Adapter\" />
     <Folder Include="StructuralPatterns\Bridge\" />
